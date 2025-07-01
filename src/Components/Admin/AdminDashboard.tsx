@@ -3,10 +3,16 @@ import { useState } from "react";
 import Sidebar from "./SideBar";
 import GalleryPage from "./Gallery/GalleryPage";
 import EventsPage from "./Events/EventsPage";
+import LoginDialog from "./LoginDialog";
 
 // Responsive Admin Dashboard Layout
 const AdminDashboard: React.FC = () => {
   const [active, setActive] = useState<"gallery" | "events">("gallery");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  if (!isAuthenticated) {
+    return <LoginDialog onSuccess={() => setIsAuthenticated(true)} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex">

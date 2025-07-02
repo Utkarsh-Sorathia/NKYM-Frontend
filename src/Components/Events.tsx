@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FaCalendarDay, FaLocationDot } from "react-icons/fa6";
 
 type EventItem = {
   id: string;
@@ -54,12 +55,12 @@ const Events: React.FC = () => {
                 <h3 className="text-xl font-bold text-gray-800 whitespace-nowrap mr-4">
                   {event.title}
                 </h3>
-                <span className="text-md text-amber-700 font-semibold whitespace-nowrap">
-                  {new Date(event.date).toLocaleDateString()}
+                <span className="text-md text-amber-700 font-semibold whitespace-nowrap flex gap-2 items-center">
+                  <FaCalendarDay />{new Date(event.date).toLocaleDateString()}
                 </span>
               </div>
-              <div className="text-sm text-gray-500 whitespace-nowrap mb-2">
-                {event.location}
+              <div className="text-sm text-gray-500 whitespace-nowrap mb-2 flex gap-2 items-center">
+                <FaLocationDot className="text-red-700" />{event.location}
               </div>
               <p className="text-gray-700">{event.description}</p>
             </div>

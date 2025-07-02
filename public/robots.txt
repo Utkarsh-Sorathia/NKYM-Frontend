@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nkym.vercel.app/sitemap.xml

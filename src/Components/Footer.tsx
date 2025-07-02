@@ -1,11 +1,17 @@
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 
+const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+  e.preventDefault();
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+};
+
 const Footer: React.FC = () => (
   <footer className="bg-amber-50 text-black py-12 border-t border-amber-200">
     <div className="container mx-auto px-8">
-      {/* Grid layout: 1 column on mobile, 2 columns on md and up */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Column 1: Logo & Social */}
         <div>
           <div className="flex items-center space-x-2 mb-4">
             <img src="/icon.png" alt="Ganesha" className="w-16 h-16" />
@@ -35,28 +41,43 @@ const Footer: React.FC = () => (
           </div>
         </div>
 
-        {/* Column 2: Quick Links & Important Dates */}
         <div className="flex space-x-8 sm:space-x-16 md:space-x-32 lg:space-x-48">
           <div className="flex flex-col">
             <h3 className="text-lg font-bold text-amber-300 mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-amber-300 transition duration-300">
+                <a
+                  href="#home"
+                  onClick={e => scrollToSection(e, "home")}
+                  className="hover:text-amber-300 transition duration-300"
+                >
                   Home
                 </a>
               </li>
               <li>
-                <a href="#about" className="hover:text-amber-300 transition duration-300">
+                <a
+                  href="#about"
+                  onClick={e => scrollToSection(e, "about")}
+                  className="hover:text-amber-300 transition duration-300"
+                >
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#events" className="hover:text-amber-300 transition duration-300">
+                <a
+                  href="#events"
+                  onClick={e => scrollToSection(e, "events")}
+                  className="hover:text-amber-300 transition duration-300"
+                >
                   Events
                 </a>
               </li>
               <li>
-                <a href="#gallery" className="hover:text-amber-300 transition duration-300">
+                <a
+                  href="#gallery"
+                  onClick={e => scrollToSection(e, "gallery")}
+                  className="hover:text-amber-300 transition duration-300"
+                >
                   Gallery
                 </a>
               </li>
@@ -83,7 +104,6 @@ const Footer: React.FC = () => (
         </div>
       </div>
 
-      {/* Bottom Footer */}
       <div className="border-t border-amber-800 mt-12 pt-8 text-center text-sm">
         <p>&copy; 2025 NatKhat Kanudo Yuvak Mandal. All Rights Reserved.</p>
       </div>

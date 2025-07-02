@@ -1,19 +1,8 @@
-import { Helmet } from 'react-helmet';
 import { FaHandsPraying, FaPeopleGroup } from "react-icons/fa6";
 
 const About: React.FC = () => (
   <>
-  <Helmet>
-      <title>About Natkhat Kanudo Yuvak Mandal | Devotion & Community</title>
-      <meta name="description" content="Discover the journey of Natkhat Kanudo Yuvak Mandal since 2016, dedicated to celebrating Ganesh Chaturthi with devotion and community spirit." />
-      <meta name="keywords" content="Natkhat Kanudo Yuvak Mandal, Ganesh Chaturthi, community, devotion, festival, Mumbai" />
-      <meta property="og:title" content="About Natkhat Kanudo Yuvak Mandal" />
-      <meta property="og:description" content="Discover the journey of Natkhat Kanudo Yuvak Mandal since 2016, dedicated to celebrating Ganesh Chaturthi with devotion and community spirit." />
-      <meta property="og:type" content="website" />
-      <meta property="og:image" content="https://nkym.vercel.app/icon.png" />
-      <meta property="og:url" content="https://nkym.vercel.app/about" />
-    </Helmet>
-  <section id="about" className="py-20 bg-white scroll-mt-64 sm:scroll-mt-0">
+  <section id="about" className="py-12 bg-white scroll-mt-16 sm:scroll-mt-0">
     <div className="container mx-auto px-4">
       <div className="text-center mb-16">
         <h2 className="text-3xl md:text-4xl font-bold text-amber-600 mb-4">About Our Mandal</h2>

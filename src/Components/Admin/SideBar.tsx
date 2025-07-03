@@ -14,7 +14,7 @@ const Sidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
   const sidebarContent = (
     <>
       <div className="p-4 border-b flex items-center">
-        <FaShieldAlt className="mr-2 text-blue-600" />
+        <img src="/icon.png" alt="Ganesha Idol" className="w-16 h-16" />
         <span className="text-2xl font-bold text-blue-600">Admin Panel</span>
       </div>
       <nav className="mt-6 flex-1">
@@ -51,8 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
           <FaUser className="text-blue-500" />
         </div>
         <div className="ml-3">
-          <p className="text-sm font-medium text-gray-700">Admin User</p>
-          <p className="text-xs text-gray-500">Super Admin</p>
+          <p className="text-sm font-medium text-gray-700">Utkarsh Sorathia / Admin</p>
         </div>
       </div>
     </>

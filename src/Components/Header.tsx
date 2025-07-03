@@ -35,7 +35,7 @@ const Header: React.FC = () => {
     <header className="sticky top-0 z-50 bg-white shadow-md">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo and Title */}
-        <div className="flex items-center">
+        <a href="#" className="flex items-center" onClick={(e) => handleSmoothScroll(e, "#")}>
           <img src="/icon.png" alt="Ganesh Logo" className="h-16 w-16" />
           <div className="ml-3">
             <h1 className="text-xl font-bold text-amber-600">
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
             </h1>
             <p className="text-xs text-gray-600">Est. 2016</p>
           </div>
-        </div>
+        </a>
         {/* Desktop Menu */}
         <nav className="hidden md:block">
           <ul className="flex space-x-8">
@@ -96,9 +96,8 @@ const Header: React.FC = () => {
       </div>
       {/* Mobile Menu */}
       <div
-        className={`md:hidden ${
-          mobileOpen ? "block" : "hidden"
-        } bg-white shadow-lg`}
+        className={`md:hidden ${mobileOpen ? "block" : "hidden"
+          } bg-white shadow-lg`}
       >
         <ul className="px-4 py-2">
           <li className="py-2 border-b border-gray-100">

@@ -17,7 +17,7 @@ const sectionSEO: Record<SectionKey, {
   ogUrl: string;
 }> = {
   home: {
-    title: "Home | Natkhat Kanudo Yuvak Mandal",
+    title: "Natkhat Kanudo Yuvak Mandal",
     description: "Welcome to Natkhat Kanudo Yuvak Mandal. Celebrating Ganesh Chaturthi with devotion and joy.",
     ogImage: "https://nkym.vercel.app/icon.png",
     ogUrl: "https://nkym.vercel.app/",

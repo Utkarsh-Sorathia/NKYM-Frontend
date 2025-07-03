@@ -1,5 +1,5 @@
 // src/components/admin/Sidebar.tsx
-import { FaShieldAlt, FaImages, FaCalendarAlt, FaUser, FaBars, FaTimes } from "react-icons/fa";
+import { FaImages, FaCalendarAlt, FaUser, FaBars, FaTimes } from "react-icons/fa";
 import React, { useState } from "react";
 
 interface SidebarProps {

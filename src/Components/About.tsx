@@ -17,13 +17,16 @@ const About: React.FC = () => (
               style={{ maxHeight: '400px' }}
             />
           </div>
-          <div className="lg:w-1/2">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">Our Journey Since 2016</h3>
+          <div className="lg:w-1/2 px-4 text-justify">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6">Our Journey Since 2012</h3>
             <p className="text-gray-600 mb-4">
-              The Natkhat Kanudo Yuvak Mandal was established in 2016 with a vision to celebrate the festival of Ganesh Chaturthi with devotion, cultural richness, and community participation. What started as a small gathering of devotees has now grown into one of the most prominent mandals in our city.
+              Our journey began in 2012 with a small but passionate group of devotees coming together to celebrate Janmashtami by installing an idol of Lord Krishna. For the first five years, from 2012 to 2016, these celebrations brought our community closer and laid the foundation for something greater.
+            </p>
+            <p className="text-gray-600 mb-4">
+              In 2016, the Natkhat Kanudo Yuvak Mandal was officially established with a vision to celebrate Ganesh Chaturthi with devotion, cultural richness, and active community participation. What started as a modest initiative has now grown into one of the most prominent mandals in our city.
             </p>
             <p className="text-gray-600 mb-6">
-              Every year, we install a beautifully crafted idol of Lord Ganesha and organize various cultural programs, competitions, and community services during the 10-day festival.
+              Since 2017, we have been celebrating Ganesh Chaturthi with great enthusiasm by installing a beautifully crafted idol of Lord Ganesha and organizing various cultural programs, competitions, and community service activities throughout the 10-day festival.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-amber-50 p-6 rounded-lg shadow-sm">

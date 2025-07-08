@@ -41,7 +41,7 @@ const Header: React.FC = () => {
             <h1 className="text-xl font-bold text-amber-600">
               Natkhat Kanudo Yuvak Mandal
             </h1>
-            <p className="text-xs text-gray-600">Est. 2016</p>
+            <p className="text-xs text-gray-600">Est. 2012</p>
           </div>
         </a>
         {/* Desktop Menu */}

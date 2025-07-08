@@ -1,7 +1,5 @@
-import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 type EventItem = {
   id: string;
@@ -41,10 +39,12 @@ const Footer: React.FC = () => {
   useEffect(() => {
     fetchEvents();
   }, []);
+
   return (
     <footer className="bg-amber-50 text-black py-12 border-t border-amber-200">
-      <div className="container mx-auto px-8">
+      <div className="container mx-auto px-4 sm:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Logo, description, socials */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <img src="/icon.png" alt="Ganesha" className="w-16 h-16" />
@@ -52,30 +52,15 @@ const Footer: React.FC = () => {
                 NatKhat Kanudo Yuvak Mandal
               </span>
             </div>
-            <p className="mb-4">
-              Celebrating the divine blessings of Lord Ganesha with devotion and
-              joy since 2016.
+            <p className="px-4">
+              Celebrating the divine blessings of Lord Ganesha with devotion and joy.
             </p>
-            <div className="flex space-x-4">
-              <Link
-                to="https://www.facebook.com/share/1BHJjVyQeK/"
-                className="text-amber-400 hover:text-amber-300 transition-colors"
-                aria-label="Facebook"
-              >
-                <FaFacebookF size={20} />
-              </Link>
-              <Link
-                to="https://www.instagram.com/nkym__cha__maharaja?igsh=MXU3ODBscWttb3Rrdg=="
-                className="text-amber-400 hover:text-amber-300 transition-colors"
-                aria-label="Instagram"
-              >
-                <FaInstagram size={20} />
-              </Link>
-            </div>
           </div>
 
-          <div className="flex space-x-8 sm:space-x-16 md:space-x-32 lg:space-x-48">
-            <div className="flex flex-col">
+          {/* Links, Events, Address */}
+          <div className="flex space-x-8 sm:space-x-16 md:space-x-32 lg:space-x-48 px-4">
+            {/* Quick Links */}
+            <div className="flex flex-col mb-8 sm:mb-0">
               <h3 className="text-lg font-bold text-amber-300 mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
@@ -117,7 +102,8 @@ const Footer: React.FC = () => {
               </ul>
             </div>
 
-            <div className="flex flex-col">
+            {/* Important Dates */}
+            <div className="flex flex-col mb-8 sm:mb-0">
               <h3 className="text-lg font-bold text-amber-300 mb-4">Important Dates</h3>
               <ul className="space-y-2">
                 {events.map((event) => {
@@ -144,11 +130,21 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-amber-800 mt-12 pt-8 text-center text-sm">
-          <p>&copy; 2025 NatKhat Kanudo Yuvak Mandal. All Rights Reserved.</p>
+          <div className="flex flex-col">
+              <address className="not-italic text-sm leading-relaxed text-gray-700">
+                NatKhat Kanudo Yuvak Mandal,
+                Oppo. Sidhdharth Apartment,
+                Majuragate,
+                Sagarampura,<br />
+                Surat, Gujarat - 395002
+                India
+              </address>
+            </div>
+          <p className="mt-2">&copy; 2025 NatKhat Kanudo Yuvak Mandal. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
-  )
+  );
 };
 
 export default Footer;

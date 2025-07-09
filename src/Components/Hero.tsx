@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
       id="home"
       className="relative w-full min-h-screen flex items-center justify-center text-black overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${heroBgUrl}')`,
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('${heroBgUrl}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",

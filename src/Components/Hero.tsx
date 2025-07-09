@@ -1,26 +1,26 @@
-import { useEffect, useRef } from 'react';
 import Countdown from './Countdown';
-import ParticlesBackground from "./ParticlesBackground";
+// import ParticlesBackground from "./ParticlesBackground";
+
+const heroBgUrl =
+  "https://res.cloudinary.com/dmah604pw/image/upload/v1751955568/Gallery-nkym/txhmwdtkpdbcfnoc39v0.jpg";
 
 const Hero: React.FC = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.7;
-    }
-  }, []);
-
   return (
     <section
       id="home"
       className="relative w-full min-h-screen flex items-center justify-center text-black overflow-hidden"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${heroBgUrl}')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
     >
-      <div className="absolute top-0 left-0 w-full h-full z-0">
+      {/* <div className="absolute top-0 left-0 w-full h-full z-0">
         <ParticlesBackground />
-      </div>
+      </div> */}
 
-      <div className="relative z-10 w-full px-4 text-center text-neutral-800">
+      <div className="relative z-10 w-full px-4 text-center text-white">
         <h2
           className="text-4xl md:text-6xl font-bold mb-4 font-tangerine animate-fade-in-down"
           style={{ animationDelay: "0.3s" }}
@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
         </h1>
 
         <p
-          className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-700 animate-fade-in-down"
+          className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-200 animate-fade-in-down"
           style={{ animationDelay: "0.9s" }}
         >
           Welcoming Lord Ganesha with devotion and celebrating the festival
@@ -51,6 +51,8 @@ const Hero: React.FC = () => {
           <Countdown />
         </div>
       </div>
+      {/* Optional: extra overlay for mobile */}
+      <div className="absolute inset-0 bg-black opacity-60 md:opacity-0 pointer-events-none"></div>
     </section>
   );
 };

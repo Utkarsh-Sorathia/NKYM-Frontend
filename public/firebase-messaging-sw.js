@@ -4,12 +4,12 @@
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
 
-// Initialize Firebase with your config
+// Initialize Firebase
 firebase.initializeApp({
   apiKey: "AIzaSyBQY4TRiVSg0fpfSnC9d5kfOc252lQnPHM",
   authDomain: "nkym-site.firebaseapp.com",
   projectId: "nkym-site",
-  storageBucket: "nkym-site.firebaseapp.com",
+  storageBucket: "nkym-site.appspot.com",
   messagingSenderId: "249204902267",
   appId: "1:249204902267:web:3e6428084f6b6d7d4e95de"
 });
@@ -17,52 +17,34 @@ firebase.initializeApp({
 // Get messaging instance
 const messaging = firebase.messaging();
 
-// Handle background messages (show only one notification)
-messaging.onBackgroundMessage(function(payload) {
-  console.log('[Service Worker] onBackgroundMessage:', payload);
+// ❌ Completely REMOVE this to avoid duplicate notifications
+// messaging.onBackgroundMessage(...);
 
-  // Use ONLY data payload
-  const title = payload.data?.title || 'NKYM - Ganesh Utsav Update';
-  const options = {
-    body: payload.data?.body || 'You have a new update',
-    icon: payload.data?.icon || '/icon.png',
-    badge: payload.data?.badge || '/icon.png',
-    tag: 'nkym-event',
-    actions: [
-      { action: 'view', title: 'View Event' },
-      { action: 'dismiss', title: 'Dismiss' }
-    ],
-    data: {
-      url: payload.data?.click_action || 'https://nkym.vercel.app/#events',
-      ...payload.data
-    }
-  };
-
-  self.registration.showNotification(title, options);
-});
-
-// (Optional) Handle push event directly for broader compatibility (e.g. site closed)
-// This will use only data payload as well to avoid duplicates.
+// ✅ SINGLE notification handler using push event
 self.addEventListener('push', (event) => {
-  console.log('[Service Worker] Push Received:', event);
-  let data = {};
+  console.log('[Service Worker] Push received:', event);
+
+  let payload = {};
   try {
-    data = event.data.json();
+    payload = event.data.json();
   } catch (e) {
-    console.error('Push payload is not JSON:', e);
+    console.error('Invalid push payload JSON:', e);
+    return;
   }
 
-  // Use ONLY data payload (not notification)
-  const payloadData = data?.data || {};
-  const title = payloadData.title || 'NKYM - Ganesh Utsav';
+  const data = payload?.data || {}; // FCM wraps data under `data` field
+  console.log('[Service Worker] Push data:', data);
+  
+
+  const title = data.title || 'NKYM - Ganesh Utsav';
   const options = {
-    body: payloadData.body || 'Tap to view the latest updates!',
-    icon: payloadData.icon || '/icon.png',
-    badge: payloadData.badge || '/icon.png',
-    tag: 'nkym-push',
+    body: data.body || 'Tap to view the latest event update.',
+    icon: data.icon || '/icon.png',
+    badge: data.badge || '/icon.png',
+    tag: data.tag || 'nkym-notification',
     data: {
-      url: payloadData.click_action || 'https://nkym.vercel.app/#events',
-      ...payloadData
+      url: data.click_action || 'https://nkym.vercel.app/#events',
+      ...data
     },
     actions: [
       { action: 'view', title: 'View' },
@@ -75,25 +57,23 @@ self.addEventListener('push', (event) => {
   );
 });
 
-// Handle notification click — open the right page/tab
+// Handle clicks to open appropriate page
 self.addEventListener('notificationclick', function(event) {
   console.log('[Service Worker] Notification click received:', event.notification);
-  const targetUrl = event.notification?.data?.url || 'https://nkym.vercel.app/#events';
+  const urlToOpen = event.notification?.data?.url || 'https://nkym.vercel.app/#events';
   event.notification.close();
 
-  if (event.action === 'dismiss') {
-    return; // User dismissed the notification
-  }
+  if (event.action === 'dismiss') return;
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function(clientList) {
       for (let client of clientList) {
-        if (client.url === targetUrl && 'focus' in client) {
+        if (client.url === urlToOpen && 'focus' in client) {
           return client.focus();
         }
       }
       if (clients.openWindow) {
-        return clients.openWindow(targetUrl);
+        return clients.openWindow(urlToOpen);
       }
     })
   );

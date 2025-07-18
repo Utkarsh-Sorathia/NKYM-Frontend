@@ -18,9 +18,9 @@ const messaging = getMessaging(app);
 class FCMService {
   private static instance: FCMService;
   private currentToken: string | null = null;
-  
-  private constructor() {}
-  
+
+  private constructor() { }
+
   static getInstance(): FCMService {
     if (!FCMService.instance) {
       FCMService.instance = new FCMService();
@@ -31,21 +31,21 @@ class FCMService {
   async requestPermissionAndGetToken(): Promise<string | null> {
     try {
       const permission = await Notification.requestPermission();
-      
+
       if (permission === 'granted') {
         const token = await getToken(messaging, {
           vapidKey: import.meta.env.VITE_APP_FIREBASE_VAPID_KEY
         });
-        
+
         if (token) {
           this.currentToken = token;
           await this.saveTokenToServer(token);
-          
+
           Toast.fire({
             icon: 'success',
             title: 'Notifications enabled successfully! 🔔'
           });
-          
+
           return token;
         }
       } else {
@@ -54,7 +54,7 @@ class FCMService {
           title: 'Notifications permission denied'
         });
       }
-      
+
       return null;
     } catch (error) {
       console.error('Error getting FCM token:', error);
@@ -94,23 +94,25 @@ class FCMService {
 
   setupForegroundMessageListener() {
     onMessage(messaging, (payload) => {
-      console.log('Foreground message received:', payload);
-      
-      const { notification, data } = payload;
-      
-      if (notification) {
-        Toast.fire({
-          icon: 'info',
-          title: notification.title || 'NKYM Notification',
-          text: notification.body || 'You have a new notification',
-          showConfirmButton: true,
-          confirmButtonText: 'View Event'
-        }).then((result) => {
-          if (result.isConfirmed && data?.action === 'view_event') {
-            document.getElementById('events')?.scrollIntoView({ behavior: 'smooth' });
-          }
-        });
-      }
+      console.log('💬 Foreground message received:', payload);
+
+      // ✅ Pull title/body from payload.data instead of payload.notification
+      const { data } = payload;
+
+      const title = data?.title || 'NKYM Notification';
+      const body = data?.body || 'You have a new update';
+
+      Toast.fire({
+        icon: 'info',
+        title: title,
+        text: body,
+        showConfirmButton: true,
+        confirmButtonText: 'View Event'
+      }).then((result) => {
+        if (result.isConfirmed && data?.action === 'view_event') {
+          document.getElementById('events')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
     });
   }
 

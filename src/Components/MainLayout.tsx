@@ -7,6 +7,7 @@ import Gallery from './Gallery';
 import Events from './Events';
 import Footer from './Footer';
 import BackToTop from './BackToTop';
+import NotificationManager from './NotificationManager';
 
 type SectionKey = 'home' | 'about' | 'gallery' | 'events';
 
@@ -97,6 +98,7 @@ const MainLayout = () => {
       <Gallery />
       <Events />
       <Footer />
+      <NotificationManager />
       <BackToTop />
     </>
   );

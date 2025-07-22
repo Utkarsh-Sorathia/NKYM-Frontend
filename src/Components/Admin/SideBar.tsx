@@ -1,6 +1,8 @@
 // src/components/admin/Sidebar.tsx
-import { FaImages, FaCalendarAlt, FaUser, FaBars, FaTimes, FaBell } from "react-icons/fa";
+import { FaImages, FaCalendarAlt, FaUser, FaBars, FaTimes, FaBell, FaSignOutAlt } from "react-icons/fa";
 import React, { useState } from "react";
+import { FaChevronDown } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
   active: "gallery" | "events" | "notification";
@@ -9,6 +11,9 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
   const [open, setOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   // Sidebar content as a separate variable for reuse
   const sidebarContent = (
@@ -22,9 +27,8 @@ const Sidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
           <h3 className="text-xs uppercase text-gray-500 font-semibold tracking-wider">Management</h3>
         </div>
         <button
-          className={`flex items-center px-6 py-3 w-full text-left hover:bg-blue-50 transition ${
-            active === "gallery" ? "bg-blue-50 border-l-4 border-blue-500" : ""
-          }`}
+          className={`flex items-center px-6 py-3 w-full text-left hover:bg-blue-50 transition ${active === "gallery" ? "bg-blue-50 border-l-4 border-blue-500" : ""
+            }`}
           onClick={() => {
             onChange("gallery");
             setOpen(false);
@@ -34,9 +38,8 @@ const Sidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
           Gallery
         </button>
         <button
-          className={`flex items-center px-6 py-3 w-full text-left hover:bg-blue-50 transition ${
-            active === "events" ? "bg-blue-50 border-l-4 border-blue-500" : ""
-          }`}
+          className={`flex items-center px-6 py-3 w-full text-left hover:bg-blue-50 transition ${active === "events" ? "bg-blue-50 border-l-4 border-blue-500" : ""
+            }`}
           onClick={() => {
             onChange("events");
             setOpen(false);
@@ -46,9 +49,8 @@ const Sidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
           Events
         </button>
         <button
-          className={`flex items-center px-6 py-3 w-full text-left hover:bg-blue-50 transition ${
-            active === "notification" ? "bg-blue-50 border-l-4 border-blue-500" : ""
-          }`}
+          className={`flex items-center px-6 py-3 w-full text-left hover:bg-blue-50 transition ${active === "notification" ? "bg-blue-50 border-l-4 border-blue-500" : ""
+            }`}
           onClick={() => {
             onChange("notification");
             setOpen(false);
@@ -58,13 +60,46 @@ const Sidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
           Notifications
         </button>
       </nav>
-      <div className="p-4 border-t flex items-center">
-        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-          <FaUser className="text-blue-500" />
-        </div>
-        <div className="ml-3">
-          <p className="text-sm font-medium text-gray-700">Utkarsh Sorathia / Admin</p>
-        </div>
+      {/* User Profile with popper */}
+      <div className="relative border-t px-6 py-4 mt-auto">
+        <button
+          className="flex items-center justify-between w-full group"
+          onClick={() => setUserMenuOpen((prev) => !prev)}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full bg-blue-100 flex items-center justify-center">
+              <FaUser className="text-blue-500" size={20} />
+            </div>
+            <div className="text-left">
+              <div className="text-sm font-semibold text-gray-800">Utkarsh Sorathia</div>
+              <div className="text-xs text-gray-500">Admin</div>
+            </div>
+          </div>
+          <FaChevronDown
+            className={`transition-transform duration-200 text-gray-500 ${userMenuOpen ? "rotate-180" : ""
+              }`}
+          />
+        </button>
+
+        {/* Dropdown/popup */}
+        {userMenuOpen && (
+          <div className="absolute bottom-16 left-6 bg-white border rounded shadow-lg w-52 z-50">
+            <div className="p-4">
+              <p className="text-sm font-medium text-gray-800">Utkarsh Sorathia</p>
+              <p className="text-xs text-gray-500">Admin</p>
+            </div>
+            <button
+              onClick={() => {
+                localStorage.removeItem("adminToken");
+                navigate("/");
+              }}
+              className="flex items-center px-4 py-2 text-red-600 hover:bg-red-50 w-full text-sm border-t"
+            >
+              <FaSignOutAlt className="mr-2" />
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

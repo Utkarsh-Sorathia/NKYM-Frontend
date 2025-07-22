@@ -37,7 +37,18 @@ const NotificationTable: React.FC<Props> = ({ logs }) => {
               <td className="px-6 py-4 text-green-700">{log.successCount || 0}</td>
               <td className="px-6 py-4 text-red-600">{log.failureCount || 0}</td>
               <td className="px-6 py-4">
-                {log.sentAt ? new Date(log.sentAt.seconds * 1000).toLocaleString() : "-"}
+                {log.sentAt
+                  ? new Date(log.sentAt._seconds * 1000).toLocaleString("en-IN", {
+                    timeZone: "Asia/Kolkata",
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: "numeric",
+                    hour12: true,
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })
+                  : "-"}
               </td>
             </tr>
           ))}

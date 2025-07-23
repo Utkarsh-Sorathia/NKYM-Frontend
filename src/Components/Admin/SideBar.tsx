@@ -1,12 +1,12 @@
 // src/components/admin/Sidebar.tsx
-import { FaImages, FaCalendarAlt, FaUser, FaBars, FaTimes, FaBell, FaSignOutAlt } from "react-icons/fa";
+import { FaImages, FaCalendarAlt, FaUser, FaBars, FaTimes, FaBell, FaSignOutAlt, FaRegWindowMaximize } from "react-icons/fa";
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
-  active: "gallery" | "events" | "notification";
-  onChange: (section: "gallery" | "events" | "notification") => void;
+  active: "gallery" | "events" | "notification" | "popup";
+  onChange: (section: "gallery" | "events" | "notification" | "popup") => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
@@ -58,6 +58,17 @@ const Sidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
         >
           <FaBell className="mr-3 text-blue-500" />
           Notifications
+        </button>
+        <button
+          className={`flex items-center px-6 py-3 w-full text-left hover:bg-blue-50 transition ${active === "popup" ? "bg-blue-50 border-l-4 border-blue-500" : ""
+            }`}
+          onClick={() => {
+            onChange("popup");
+            setOpen(false);
+          }}
+        >
+          <FaRegWindowMaximize className="mr-3 text-blue-500" />
+          Pop up
         </button>
       </nav>
       {/* User Profile with popper */}

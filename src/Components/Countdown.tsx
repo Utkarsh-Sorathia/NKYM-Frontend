@@ -29,32 +29,36 @@ const Countdown: React.FC = () => {
 
   if (timeLeft.finished) {
     return (
-      <div className="countdown-box p-6 inline-block">
-        <span className="text-2xl font-bold text-amber-600">Happy Ganesh Chaturthi!</span>
+      <div className="p-8 text-center">
+        <span className="text-3xl font-extrabold text-amber-700 animate-pulse">
+          🪔 Happy Ganesh Chaturthi! 🐘
+        </span>
       </div>
     );
   }
 
   return (
-    <div className="countdown-box p-6 inline-block">
-      <h3 className="text-xl mb-4">Countdown to Ganesh Chaturthi 2025</h3>
-      <div className="flex justify-center space-x-4">
-        <div className="text-center">
-          <div className="text-4xl font-bold">{String(timeLeft.days).padStart(2, '0')}</div>
-          <div className="text-sm">Days</div>
-        </div>
-        <div className="text-center">
-          <div className="text-4xl font-bold">{String(timeLeft.hours).padStart(2, '0')}</div>
-          <div className="text-sm">Hours</div>
-        </div>
-        <div className="text-center">
-          <div className="text-4xl font-bold">{String(timeLeft.minutes).padStart(2, '0')}</div>
-          <div className="text-sm">Minutes</div>
-        </div>
-        <div className="text-center">
-          <div className="text-4xl font-bold">{String(timeLeft.seconds).padStart(2, '0')}</div>
-          <div className="text-sm">Seconds</div>
-        </div>
+    <div className="max-w-md mx-auto px-4">
+      <h3 className="text-xl font-semibold mb-6 text-amber-800 text-center">
+        Countdown to Ganesh Chaturthi 2025
+      </h3>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {[
+          { label: 'Days', value: timeLeft.days },
+          { label: 'Hours', value: timeLeft.hours },
+          { label: 'Minutes', value: timeLeft.minutes },
+          { label: 'Seconds', value: timeLeft.seconds }
+        ].map((item, index) => (
+          <div
+            key={index}
+            className="countdown-box rounded-lg p-4 text-center border border-white border-opacity-20 backdrop-blur-sm shadow-sm"
+          >
+            <div className="text-3xl font-bold text-white select-none">
+              {String(item.value).padStart(2, '0')}
+            </div>
+            <div className="text-sm text-white mt-1 select-none">{item.label}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

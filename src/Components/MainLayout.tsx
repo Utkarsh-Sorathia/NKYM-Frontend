@@ -91,6 +91,13 @@ const MainLayout = () => {
         <meta name="twitter:title" content={seo.title} />
         <meta name="twitter:description" content={seo.description} />
         <meta name="twitter:image" content={seo.ogImage} />
+
+        <meta name="keywords" content="Ganesh Chaturthi, Natkhat Kanudo Yuvak Mandal, Ganesh Utsav, Nkym, nkym, natkhat kanudo, surat, Community Events" />
+        <meta name="author" content="Natkhat Kanudo Yuvak Mandal" />
+        <link rel="canonical" href={seo.ogUrl} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta httpEquiv="x-ua-compatible" content="ie=edge" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
       <Header />
       <Hero />

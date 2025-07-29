@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
       id="home"
       className="relative w-full min-h-screen flex items-center justify-center text-black overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('${heroBgUrl}')`,
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.1)), url('${heroBgUrl}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
         </h1>
 
         <p
-          className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-200 animate-fade-in-down"
+          className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-200 animate-fade-in-down text-white"
           style={{ animationDelay: "0.9s" }}
         >
           Welcoming Lord Ganesha with devotion and celebrating the festival

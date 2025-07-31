@@ -52,7 +52,7 @@ const Events: React.FC = () => {
           {events.map((event) => (
             <div
               key={event.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col"
+              className="bg-amber-50 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col"
             >
               {/* Title and date */}
               <div className="flex items-center justify-between mb-4">

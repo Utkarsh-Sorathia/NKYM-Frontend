@@ -13,16 +13,19 @@ const NotificationManager: React.FC = () => {
     const init = async () => {
       const supported = fcmService.isNotificationSupported();
       setIsSupported(supported);
-      setPermission(Notification.permission);
+
+      // Get permission from localStorage instead of checking Notification.permission directly
+      const storedPermission = fcmService.getStoredNotificationPermission();
+      setPermission(storedPermission || Notification.permission);
 
       const currentToken = await fcmService.getCurrentToken();
-      const isGranted = Notification.permission === 'granted' && !!currentToken;
+      const isGranted = storedPermission === 'granted' && !!currentToken;
       setIsEnabled(isGranted);
 
       fcmService.setupForegroundMessageListener();
 
-      // Show modal only if not yet enabled + permission not denied
-      if (supported && !isGranted && Notification.permission !== 'denied') {
+      // Only show modal if notifications aren't enabled and the user hasn't already made a choice
+      if (supported && !isGranted && storedPermission !== 'denied') {
         setTimeout(() => {
           setShowModal(true);
         }, 2500);
@@ -33,13 +36,13 @@ const NotificationManager: React.FC = () => {
   }, []);
 
   const handleEnableNotifications = async () => {
+    setShowModal(false); // Close the modal immediately
     setLoading(true);
     try {
       const token = await fcmService.requestPermissionAndGetToken();
       if (token) {
         setIsEnabled(true);
         setPermission('granted');
-        setShowModal(false); // close modal
       }
     } catch (error) {
       console.error('Error enabling notifications:', error);
@@ -55,10 +58,7 @@ const NotificationManager: React.FC = () => {
     <>
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          {/* Background Blur */}
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-
-          {/* Modal */}
           <div className="relative z-10 bg-white max-w-sm w-full mx-4 p-6 rounded-lg shadow-lg border border-orange-200">
             <div className="flex items-center space-x-3 mb-4">
               <div className="p-2 bg-orange-100 rounded-full">
@@ -88,11 +88,6 @@ const NotificationManager: React.FC = () => {
                 </>
               )}
             </button>
-            {/* {permission === 'denied' && (
-              <p className="mt-4 text-red-600 text-sm">
-                ⚠️ Notifications are blocked. Enable them in browser settings.
-              </p>
-            )} */}
           </div>
         </div>
       )}

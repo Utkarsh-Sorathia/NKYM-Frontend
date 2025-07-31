@@ -32,6 +32,9 @@ class FCMService {
     try {
       const permission = await Notification.requestPermission();
 
+      // Store permission status in localStorage
+      this.storeNotificationPermissionStatus(permission);
+
       if (permission === 'granted') {
         const token = await getToken(messaging, {
           vapidKey: import.meta.env.VITE_APP_FIREBASE_VAPID_KEY
@@ -66,6 +69,15 @@ class FCMService {
     }
   }
 
+  private storeNotificationPermissionStatus(permission: NotificationPermission) {
+    localStorage.setItem('notification_permission', permission);
+  }
+
+  // Make this method public so it can be accessed outside the class
+  public getStoredNotificationPermission(): NotificationPermission | null {
+    return localStorage.getItem('notification_permission') as NotificationPermission | null;
+  }
+
   private async saveTokenToServer(token: string) {
     try {
       await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/notifications/save-token`, {
@@ -96,9 +108,7 @@ class FCMService {
     onMessage(messaging, (payload) => {
       console.log('💬 Foreground message received:', payload);
 
-      // ✅ Pull title/body from payload.data instead of payload.notification
       const { data } = payload;
-
       const title = data?.title || 'NKYM Notification';
       const body = data?.body || 'You have a new update';
 
@@ -122,6 +132,10 @@ class FCMService {
 
   isNotificationSupported(): boolean {
     return 'serviceWorker' in navigator && 'Notification' in window;
+  }
+
+  hasUserMadeNotificationChoice(): boolean {
+    return this.getStoredNotificationPermission() !== null;
   }
 }
 

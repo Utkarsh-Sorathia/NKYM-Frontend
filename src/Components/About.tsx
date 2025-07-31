@@ -13,7 +13,7 @@ const About: React.FC = () => (
             <img
               src="/icon.png"
               alt="Ganesha Idol"
-              className="rounded-lg shadow-xl shadow-amber-200 border border-amber-100 ganpati-idol max-w-xs sm:max-w-sm md:max-w-md w-full object-contain"
+              className="rounded-lg shadow-xl bg-amber-50 border border-amber-100 ganpati-idol max-w-xs sm:max-w-sm md:max-w-md w-full object-contain"
               style={{ maxHeight: '400px' }}
             />
           </div>

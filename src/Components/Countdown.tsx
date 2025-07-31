@@ -39,7 +39,7 @@ const Countdown: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto px-4">
-      <h3 className="text-xl font-semibold mb-6 text-amber-800 text-center">
+      <h3 className="text-xl font-semibold mb-6 text-transparent text-white text-center">
         Countdown to Ganesh Chaturthi 2025
       </h3>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">

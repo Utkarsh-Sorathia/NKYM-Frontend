@@ -14,7 +14,7 @@ const months = [
   "July", "August", "September", "October", "November", "December"
 ];
 
-// Converts "August 08, 2025" to "2025-08-08"
+// Converts "August 08, 2026" to "2026-08-08"
 function parseDisplayDateToInput(dateStr: string): string {
   const parts = dateStr.match(/^([A-Za-z]+)\s(\d{2}),\s(\d{4})$/);
   if (!parts) return "";
@@ -35,7 +35,7 @@ function parseDisplayTimeToInput(timeStr?: string): { time: string; ampm: "AM" |
   return { time: `${hour.toString().padStart(2, "0")}:${minute}`, ampm };
 }
 
-// Converts "2025-08-08" to "August 08, 2025"
+// Converts "2026-08-08" to "August 08, 2026"
 function formatInputDateToDisplay(date: string): string {
   if (!date) return "";
   const [year, month, day] = date.split("-");

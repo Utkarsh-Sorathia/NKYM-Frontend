@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const targetDate = new Date('August 27, 2025 00:00:00').getTime();
+const targetDate = new Date('September 14, 2026 00:00:00').getTime();
 
 const Countdown: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -39,8 +39,8 @@ const Countdown: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto px-4">
-      <h3 className="text-xl font-semibold mb-6 text-transparent text-white text-center">
-        Countdown to Ganesh Chaturthi 2025
+      <h3 className="text-xl font-semibold mb-6 text-white text-center">
+        Countdown to Ganesh Chaturthi 2026
       </h3>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[

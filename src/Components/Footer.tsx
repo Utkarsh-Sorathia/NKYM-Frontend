@@ -140,7 +140,7 @@ const Footer: React.FC = () => {
                 India
               </address>
             </div>
-          <p className="mt-2">&copy; 2025 NatKhat Kanudo Yuvak Mandal. All Rights Reserved.</p>
+          <p className="mt-2">&copy; 2026 NatKhat Kanudo Yuvak Mandal. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

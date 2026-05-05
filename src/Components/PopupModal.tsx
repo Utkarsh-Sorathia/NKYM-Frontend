@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaXmark, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 interface PopupItem {
   id: string;
@@ -24,102 +26,110 @@ const PopupModal: React.FC = () => {
       .catch((err) => console.error('Error fetching popup data', err));
   }, []);
 
-
   useEffect(() => {
     if (popupItems.length > 0) {
       const timeout = setTimeout(() => {
         setVisible(true);
-      }, 7000); // 7 seconds delay
+      }, 5000); // 5 seconds delay
       return () => clearTimeout(timeout);
     }
   }, [popupItems]);
 
-  if (!visible || popupItems.length === 0) return null;
+  if (popupItems.length === 0) return null;
 
   const current = popupItems[currentIndex];
 
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handlePrev = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setCurrentIndex((prev) => (prev - 1 + popupItems.length) % popupItems.length);
   };
 
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleNext = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setCurrentIndex((prev) => (prev + 1) % popupItems.length);
   };
 
   return (
-    <div
-      className="fixed inset-0 bg-black/40 backdrop-blur-sm z-999 flex items-center justify-center p-4"
-      onClick={() => setVisible(false)}
-    >
-      <div
-        className="relative bg-white p-4 rounded-xl shadow-lg w-full max-w-md sm:max-w-xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-9999 flex items-center justify-center bg-black/90 backdrop-blur-md px-4"
           onClick={() => setVisible(false)}
-          className="absolute top-3 right-3 bg-white text-black font-bold text-lg rounded-full w-8 h-8 flex items-center justify-center shadow hover:bg-red-100 z-20"
-          aria-label="Close popup"
         >
-          ✕
-        </button>
+          {/* Close Button */}
+          <button
+            className="absolute top-6 right-6 text-white hover:text-amber-500 transition-colors z-10000"
+            onClick={() => setVisible(false)}
+          >
+            <FaXmark size={32} />
+          </button>
 
-        {/* Media Content */}
-        <div className="w-full overflow-hidden rounded-md flex items-center justify-center relative min-h-[200px]">
-          {current.mediaType === 'image' ? (
-            <img
-              src={current.mediaUrl}
-              alt="popup"
-              className="max-h-[70vh] max-w-full object-contain"
-            />
-          ) : (
-            <video
-              controls
-              autoPlay
-              muted
-              className="max-h-[70vh] max-w-full object-contain"
-              src={current.mediaUrl}
-            />
-          )}
-
+          {/* Navigation Buttons */}
           {popupItems.length > 1 && (
             <>
               <button
+                className="absolute left-4 p-2 text-white/50 hover:text-white transition-colors z-10000 hidden sm:block"
                 onClick={handlePrev}
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
-                aria-label="Previous"
               >
-                ‹
+                <FaChevronLeft size={48} />
               </button>
+
               <button
+                className="absolute right-4 p-2 text-white/50 hover:text-white transition-colors z-10000 hidden sm:block"
                 onClick={handleNext}
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full w-8 h-8 flex items-center justify-center shadow"
-                aria-label="Next"
               >
-                ›
+                <FaChevronRight size={48} />
               </button>
             </>
           )}
-        </div>
 
-        {/* Pagination dots */}
-        {popupItems.length > 1 && (
-          <div className="flex justify-center gap-2 mt-3">
-            {popupItems.map((_, i) => (
-              <span
-                key={i}
-                onClick={() => setCurrentIndex(i)}
-                className={`h-2 w-2 rounded-full cursor-pointer transition-all ${i === currentIndex
-                  ? 'bg-black scale-110'
-                  : 'bg-gray-300'
-                  }`}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="relative max-w-4xl w-full flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Media Content */}
+            <div className="w-full overflow-hidden rounded-lg flex items-center justify-center relative shadow-2xl">
+              {current.mediaType === 'image' ? (
+                <img
+                  src={current.mediaUrl}
+                  alt="Special Announcement"
+                  className="max-h-[75vh] w-auto object-contain rounded-lg"
+                />
+              ) : (
+                <video
+                  controls
+                  autoPlay
+                  className="max-h-[75vh] w-auto object-contain rounded-lg"
+                  src={current.mediaUrl}
+                />
+              )}
+            </div>
+
+            {/* Pagination dots */}
+            {popupItems.length > 1 && (
+              <div className="flex justify-center gap-3 mt-8">
+                {popupItems.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentIndex(i)}
+                    className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${i === currentIndex
+                      ? 'bg-amber-500 scale-125'
+                      : 'bg-white/30 hover:bg-white/50'
+                      }`}
+                  />
+                ))}
+              </div>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

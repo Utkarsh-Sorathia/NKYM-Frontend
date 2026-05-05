@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
+
 const ParticlesBackground = () => {
   const [init, setInit] = useState(false);
 
@@ -12,70 +13,44 @@ const ParticlesBackground = () => {
     });
   }, []);
 
-  const particlesLoaded = (container) => {
-    // console.log(container);
-  };
-
   return (
     <>
       {init && (
         <Particles
           id="tsparticles"
-          particlesLoaded={particlesLoaded}
+          className="absolute inset-0 z-0 pointer-events-none"
           options={{
-            fullScreen: { enable: false }, 
-            style: {
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-            },
-            background: {
-              color: {
-                value: "#ffffff",
-              },
-            },
-            fpsLimit: 120,
+            fullScreen: { enable: false },
+            fpsLimit: 60,
             interactivity: {
               events: {
-                // onClick: {
-                //   enable: true,
-                //   mode: "push",
-                // },
                 onHover: {
                   enable: true,
-                  mode: "repulse",
+                  mode: "bubble",
                 },
-                resize: true,
               },
               modes: {
-                push: {
-                  quantity: 6,
-                },
-                repulse: {
+                bubble: {
                   distance: 200,
-                  duration: 0.4,
+                  duration: 2,
+                  opacity: 0.8,
+                  size: 10,
+                  color: { value: "#ffd700" }
                 },
               },
             },
             particles: {
               color: {
-                value: "#e17100",
-              },
-              links: {
-                color: "#e17100",
-                distance: 150,
-                enable: true,
-                opacity: 0.5,
-                width: 1,
+                value: ["#ffd700", "#ff8c00", "#ff4500", "#ffffff"],
               },
               move: {
-                direction: "none",
+                direction: "top",
                 enable: true,
                 outModes: {
-                  default: "bounce",
+                  default: "out",
                 },
-                random: false,
-                speed: 2,
+                random: true,
+                speed: { min: 1, max: 3 },
                 straight: false,
               },
               number: {
@@ -83,16 +58,31 @@ const ParticlesBackground = () => {
                   enable: true,
                   area: 800,
                 },
-                value: 180,
+                value: 100,
               },
               opacity: {
-                value: 0.5,
+                value: { min: 0.1, max: 0.6 },
+                animation: {
+                  enable: true,
+                  speed: 1,
+                  sync: false,
+                }
               },
               shape: {
                 type: "circle",
               },
               size: {
-                value: { min: 1, max: 5 },
+                value: { min: 1, max: 3 },
+                animation: {
+                  enable: true,
+                  speed: 2,
+                  sync: false,
+                }
+              },
+              wobble: {
+                enable: true,
+                distance: 5,
+                speed: 10,
               },
             },
             detectRetina: true,

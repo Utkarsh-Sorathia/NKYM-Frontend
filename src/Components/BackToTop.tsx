@@ -53,7 +53,7 @@ const BackToTop: React.FC = () => {
         <button
           aria-label="Back to top"
           onClick={handleClick}
-          className="fixed bottom-8 right-8 z-50 bg-amber-500 text-white p-3 rounded-full shadow-lg hover:bg-amber-700 transition-colors ease-in-out duration-300 animate-bounce"
+          className="fixed bottom-8 right-8 z-50 bg-amber-500 text-white p-3 rounded-full shadow-lg hover:bg-amber-700 transition-colors ease-in-out duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

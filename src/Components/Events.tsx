@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaCalendarDay, FaLocationDot } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 type EventItem = {
   id: string;
@@ -33,14 +34,34 @@ const Events: React.FC = () => {
     fetchEvents();
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
   return (
     <section id="events" className="py-12 bg-gray-50 scroll-mt-16 sm:scroll-mt-0">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-amber-600 mb-4 tracking-wide">
+          <motion.h2 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-extrabold text-amber-600 mb-4 tracking-wide"
+          >
             Upcoming Events
-          </h2>
+          </motion.h2>
           <div className="w-24 h-1 bg-amber-500 mx-auto rounded-full"></div>
           <p className="text-gray-600 mt-5 max-w-3xl mx-auto text-lg font-medium">
             Mark your calendars for these special moments during Ganesh Utsav!
@@ -48,10 +69,18 @@ const Events: React.FC = () => {
         </div>
 
         {/* Events grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {events.map((event) => (
-            <div
+            <motion.div
               key={event.id}
+              variants={itemVariants}
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
               className="bg-amber-50 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col"
             >
               {/* Title and date */}
@@ -76,7 +105,7 @@ const Events: React.FC = () => {
               )}
 
               {/* Description */}
-              <p className="text-gray-700 flex-grow">{event.description}</p>
+              <p className="text-gray-700 grow">{event.description}</p>
 
               {/* Optional time if available */}
               {event.time && (
@@ -84,9 +113,9 @@ const Events: React.FC = () => {
                   <strong>Time:</strong> {event.time}
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

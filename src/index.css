@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff8e1; /* Light amber background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d97706; /* Amber-600 */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b45309; /* Amber-700 */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d97706 #fff8e1;
+}
+
 @keyframes slideIn {
   from { transform: translateX(-100%); }
   to { transform: translateX(0); }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaBell } from 'react-icons/fa';
+import { FaBell, FaXmark } from 'react-icons/fa6';
 import { fcmService } from '../services/firebaseNotifications';
 
 const NotificationManager: React.FC = () => {
@@ -14,7 +14,6 @@ const NotificationManager: React.FC = () => {
       const supported = fcmService.isNotificationSupported();
       setIsSupported(supported);
 
-      // Get permission from localStorage instead of checking Notification.permission directly
       const storedPermission = fcmService.getStoredNotificationPermission();
       setPermission(storedPermission || Notification.permission);
 
@@ -24,7 +23,6 @@ const NotificationManager: React.FC = () => {
 
       fcmService.setupForegroundMessageListener();
 
-      // Only show modal if notifications aren't enabled and the user hasn't already made a choice
       if (supported && !isGranted && storedPermission !== 'denied') {
         setTimeout(() => {
           setShowModal(true);
@@ -36,13 +34,13 @@ const NotificationManager: React.FC = () => {
   }, []);
 
   const handleEnableNotifications = async () => {
-    setShowModal(false); // Close the modal immediately
     setLoading(true);
     try {
       const token = await fcmService.requestPermissionAndGetToken();
       if (token) {
         setIsEnabled(true);
         setPermission('granted');
+        setShowModal(false);
       }
     } catch (error) {
       console.error('Error enabling notifications:', error);
@@ -51,34 +49,50 @@ const NotificationManager: React.FC = () => {
     }
   };
 
-  // Don't render at all if permission is denied or already granted
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
   if (!isSupported || isEnabled || permission === 'denied') return null;
 
   return (
     <>
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-          <div className="relative z-10 bg-white max-w-sm w-full mx-4 p-6 rounded-lg shadow-lg border border-orange-200">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="p-2 bg-orange-100 rounded-full">
-                <FaBell className="text-orange-500 text-xl" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={handleClose}
+          ></div>
+          <div className="relative z-10 bg-white max-w-sm w-full p-6 rounded-2xl shadow-2xl border border-orange-100 transition-all duration-300">
+            {/* Close Button */}
+            <button 
+              onClick={handleClose}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+              aria-label="Close"
+            >
+              <FaXmark size={20} />
+            </button>
+
+            <div className="flex items-center space-x-4 mb-6">
+              <div className="p-3 bg-orange-100 rounded-xl">
+                <FaBell className="text-orange-500 text-2xl" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-800">Stay Updated</h3>
+                <h3 className="font-bold text-lg text-gray-800">Stay Updated</h3>
                 <p className="text-sm text-gray-600">
-                  Get notified about new events and updates.
+                  Get real-time updates about Ganesh Utsav events.
                 </p>
               </div>
             </div>
+
             <button
               onClick={handleEnableNotifications}
               disabled={loading}
-              className="w-full bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center space-x-2"
+              className="w-full bg-orange-500 text-white font-semibold px-4 py-3 rounded-xl hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center space-x-2"
             >
               {loading ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                   <span>Enabling...</span>
                 </>
               ) : (

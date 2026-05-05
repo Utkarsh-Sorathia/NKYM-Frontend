@@ -1,8 +1,9 @@
 import { initializeApp } from 'firebase/app';
+import type { FirebaseApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import type { Messaging } from 'firebase/messaging';
 import { Toast } from '../Components/Toast';
 
-// Use your existing Firebase config
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_APP_FIREBASE_AUTH_DOMAIN,
@@ -12,14 +13,23 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_APP_FIREBASE_APP_ID
 };
 
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
-
 class FCMService {
   private static instance: FCMService;
+  private app: FirebaseApp;
+  private messaging: Messaging | null = null;
   private currentToken: string | null = null;
 
-  private constructor() { }
+  private constructor() {
+    this.app = initializeApp(firebaseConfig);
+    // Initialize messaging lazily only if supported
+    if (this.isNotificationSupported()) {
+      try {
+        this.messaging = getMessaging(this.app);
+      } catch (error) {
+        console.warn('Firebase Messaging not supported in this environment:', error);
+      }
+    }
+  }
 
   static getInstance(): FCMService {
     if (!FCMService.instance) {
@@ -29,14 +39,17 @@ class FCMService {
   }
 
   async requestPermissionAndGetToken(): Promise<string | null> {
+    if (!this.messaging) {
+      console.error('Messaging not initialized. Likely insecure context.');
+      return null;
+    }
+
     try {
       const permission = await Notification.requestPermission();
-
-      // Store permission status in localStorage
       this.storeNotificationPermissionStatus(permission);
 
       if (permission === 'granted') {
-        const token = await getToken(messaging, {
+        const token = await getToken(this.messaging, {
           vapidKey: import.meta.env.VITE_APP_FIREBASE_VAPID_KEY
         });
 
@@ -73,7 +86,6 @@ class FCMService {
     localStorage.setItem('notification_permission', permission);
   }
 
-  // Make this method public so it can be accessed outside the class
   public getStoredNotificationPermission(): NotificationPermission | null {
     return localStorage.getItem('notification_permission') as NotificationPermission | null;
   }
@@ -105,7 +117,9 @@ class FCMService {
   }
 
   setupForegroundMessageListener() {
-    onMessage(messaging, (payload) => {
+    if (!this.messaging) return;
+
+    onMessage(this.messaging, (payload) => {
       console.log('💬 Foreground message received:', payload);
 
       const { data } = payload;
@@ -131,7 +145,10 @@ class FCMService {
   }
 
   isNotificationSupported(): boolean {
-    return 'serviceWorker' in navigator && 'Notification' in window;
+    return typeof window !== 'undefined' && 
+           'serviceWorker' in navigator && 
+           'Notification' in window &&
+           'requestPermission' in Notification;
   }
 
   hasUserMadeNotificationChoice(): boolean {

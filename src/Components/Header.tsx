@@ -44,6 +44,7 @@ const Header: React.FC = () => {
             <p className="text-xs text-gray-600">Est. 2012</p>
           </div>
         </a>
+
         {/* Desktop Menu */}
         <nav className="hidden md:block">
           <ul className="flex space-x-8">
@@ -85,6 +86,7 @@ const Header: React.FC = () => {
             </li>
           </ul>
         </nav>
+
         {/* Hamburger Button */}
         <button
           className="md:hidden text-amber-600 text-2xl"
@@ -94,6 +96,7 @@ const Header: React.FC = () => {
           <FaBars />
         </button>
       </div>
+
       {/* Mobile Menu */}
       <div
         className={`md:hidden ${mobileOpen ? "block" : "hidden"

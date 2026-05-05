@@ -1,8 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaBars } from "react-icons/fa6";
 
 const Header: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleMenuToggle = () => setMobileOpen(!mobileOpen);
 
@@ -32,16 +46,26 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-md">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled 
+          ? "bg-white shadow-md py-2" 
+          : "bg-transparent py-4"
+      }`}
+    >
+      <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo and Title */}
-        <a href="#" className="flex items-center" onClick={(e) => handleSmoothScroll(e, "#")}>
-          <img src="/icon.png" alt="Ganesh Logo" className="h-16 w-16" />
+        <a href="#" className="flex items-center group" onClick={(e) => handleSmoothScroll(e, "#")}>
+          <img src="/icon.png" alt="Ganesh Logo" className="h-14 w-14 sm:h-16 sm:w-16 transition-transform duration-300 group-hover:scale-110" />
           <div className="ml-3">
-            <h1 className="text-xl font-bold text-amber-600">
+            <h1 className={`text-lg sm:text-xl font-bold transition-colors duration-300 ${
+              scrolled ? "text-amber-600" : "text-white"
+            }`}>
               Natkhat Kanudo Yuvak Mandal
             </h1>
-            <p className="text-xs text-gray-600">Est. 2012</p>
+            <p className={`text-[10px] sm:text-xs transition-colors duration-300 ${
+              scrolled ? "text-gray-600" : "text-gray-200"
+            }`}>Est. 2012</p>
           </div>
         </a>
 
@@ -51,7 +75,11 @@ const Header: React.FC = () => {
             <li>
               <a
                 href="#"
-                className="nav-link active-nav text-amber-600 font-medium"
+                className={`nav-link font-semibold transition-colors duration-300 ${
+                  scrolled 
+                    ? "text-gray-700 hover:text-amber-600" 
+                    : "text-white hover:text-amber-300"
+                }`}
                 onClick={(e) => handleSmoothScroll(e, "#")}
               >
                 Home
@@ -60,7 +88,11 @@ const Header: React.FC = () => {
             <li>
               <a
                 href="#about"
-                className="nav-link hover:text-amber-600 font-medium"
+                className={`nav-link font-semibold transition-colors duration-300 ${
+                  scrolled 
+                    ? "text-gray-700 hover:text-amber-600" 
+                    : "text-white hover:text-amber-300"
+                }`}
                 onClick={(e) => handleSmoothScroll(e, "#about")}
               >
                 About Us
@@ -69,7 +101,11 @@ const Header: React.FC = () => {
             <li>
               <a
                 href="#gallery"
-                className="nav-link hover:text-amber-600 font-medium"
+                className={`nav-link font-semibold transition-colors duration-300 ${
+                  scrolled 
+                    ? "text-gray-700 hover:text-amber-600" 
+                    : "text-white hover:text-amber-300"
+                }`}
                 onClick={(e) => handleSmoothScroll(e, "#gallery")}
               >
                 Gallery
@@ -78,7 +114,11 @@ const Header: React.FC = () => {
             <li>
               <a
                 href="#events"
-                className="nav-link hover:text-amber-600 font-medium"
+                className={`nav-link font-semibold transition-colors duration-300 ${
+                  scrolled 
+                    ? "text-gray-700 hover:text-amber-600" 
+                    : "text-white hover:text-amber-300"
+                }`}
                 onClick={(e) => handleSmoothScroll(e, "#events")}
               >
                 Events
@@ -89,7 +129,9 @@ const Header: React.FC = () => {
 
         {/* Hamburger Button */}
         <button
-          className="md:hidden text-amber-600 text-2xl"
+          className={`md:hidden text-2xl transition-colors duration-300 ${
+            scrolled ? "text-amber-600" : "text-white"
+          }`}
           onClick={handleMenuToggle}
           aria-label="Open menu"
         >
@@ -100,40 +142,40 @@ const Header: React.FC = () => {
       {/* Mobile Menu */}
       <div
         className={`md:hidden ${mobileOpen ? "block" : "hidden"
-          } bg-white shadow-lg`}
+          } bg-white shadow-lg absolute top-full left-0 right-0`}
       >
         <ul className="px-4 py-2">
-          <li className="py-2 border-b border-gray-100">
+          <li className="py-3 border-b border-gray-100">
             <a
               href="#"
-              className="block mobile-nav-link text-amber-600 font-medium"
+              className="block text-amber-600 font-medium"
               onClick={(e) => handleSmoothScroll(e, "#")}
             >
               Home
             </a>
           </li>
-          <li className="py-2 border-b border-gray-100">
+          <li className="py-3 border-b border-gray-100">
             <a
               href="#about"
-              className="block mobile-nav-link hover:text-amber-600 font-medium"
+              className="block text-gray-700 hover:text-amber-600 font-medium"
               onClick={(e) => handleSmoothScroll(e, "#about")}
             >
               About Us
             </a>
           </li>
-          <li className="py-2 border-b border-gray-100">
+          <li className="py-3 border-b border-gray-100">
             <a
               href="#gallery"
-              className="block mobile-nav-link hover:text-amber-600 font-medium"
+              className="block text-gray-700 hover:text-amber-600 font-medium"
               onClick={(e) => handleSmoothScroll(e, "#gallery")}
             >
               Gallery
             </a>
           </li>
-          <li className="py-2 border-b border-gray-100">
+          <li className="py-3 border-b border-gray-100">
             <a
               href="#events"
-              className="block mobile-nav-link hover:text-amber-600 font-medium"
+              className="block text-gray-700 hover:text-amber-600 font-medium"
               onClick={(e) => handleSmoothScroll(e, "#events")}
             >
               Events

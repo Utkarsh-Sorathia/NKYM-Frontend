@@ -41,18 +41,18 @@ const Footer: React.FC = () => {
   }, []);
 
   return (
-    <footer className="bg-amber-50 text-black py-12 border-t border-amber-200">
+    <footer className="bg-maroon-950 text-cream-100 py-12 border-t border-gold-900">
       <div className="container mx-auto px-4 sm:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Logo, description, socials */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <img src="/icon.png" alt="Ganesha" className="w-16 h-16" />
-              <span className="logo-font text-2xl font-bold text-amber-300">
+              <span className="text-2xl font-display font-bold text-gold-300">
                 NatKhat Kanudo Yuvak Mandal
               </span>
             </div>
-            <p className="px-4">
+            <p className="px-4 text-cream-100/80">
               Celebrating the divine blessings of Lord Ganesha with devotion and joy.
             </p>
           </div>
@@ -61,13 +61,13 @@ const Footer: React.FC = () => {
           <div className="flex space-x-8 sm:space-x-16 md:space-x-32 lg:space-x-48 px-4">
             {/* Quick Links */}
             <div className="flex flex-col mb-8 sm:mb-0">
-              <h3 className="text-lg font-bold text-amber-300 mb-4">Quick Links</h3>
+              <h3 className="text-lg font-bold text-gold-300 mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
                   <a
                     href="#home"
                     onClick={e => scrollToSection(e, "home")}
-                    className="hover:text-amber-300 transition duration-300"
+                    className="hover:text-gold-400 transition duration-300"
                   >
                     Home
                   </a>
@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
                   <a
                     href="#about"
                     onClick={e => scrollToSection(e, "about")}
-                    className="hover:text-amber-300 transition duration-300"
+                    className="hover:text-gold-400 transition duration-300"
                   >
                     About Us
                   </a>
@@ -85,7 +85,7 @@ const Footer: React.FC = () => {
                   <a
                     href="#events"
                     onClick={e => scrollToSection(e, "events")}
-                    className="hover:text-amber-300 transition duration-300"
+                    className="hover:text-gold-400 transition duration-300"
                   >
                     Events
                   </a>
@@ -94,7 +94,7 @@ const Footer: React.FC = () => {
                   <a
                     href="#gallery"
                     onClick={e => scrollToSection(e, "gallery")}
-                    className="hover:text-amber-300 transition duration-300"
+                    className="hover:text-gold-400 transition duration-300"
                   >
                     Gallery
                   </a>
@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
 
             {/* Important Dates */}
             <div className="flex flex-col mb-8 sm:mb-0">
-              <h3 className="text-lg font-bold text-amber-300 mb-4">Important Dates</h3>
+              <h3 className="text-lg font-bold text-gold-300 mb-4">Important Dates</h3>
               <ul className="space-y-2">
                 {events.map((event) => {
                   const dateObj = new Date(event.date);
@@ -114,7 +114,7 @@ const Footer: React.FC = () => {
 
                   return (
                     <li className="flex items-center" key={event.id}>
-                      <span className="bg-amber-800 text-white rounded-full w-12 h-6 flex items-center justify-center mr-2 text-xs">
+                      <span className="bg-gold-500 text-maroon-950 font-semibold rounded-full w-12 h-6 flex items-center justify-center mr-2 text-xs">
                         {formattedDate}
                       </span>
                       <span>{event.title}</span>
@@ -122,16 +122,16 @@ const Footer: React.FC = () => {
                   );
                 })}
                 {events.length === 0 && (
-                  <li className="text-sm text-gray-500">No upcoming events</li>
+                  <li className="text-sm text-cream-100/60">No upcoming events</li>
                 )}
               </ul>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-amber-800 mt-12 pt-8 text-center text-sm">
+        <div className="border-t border-gold-900 mt-12 pt-8 text-center text-sm">
           <div className="flex flex-col">
-              <address className="not-italic text-sm leading-relaxed text-gray-700">
+              <address className="not-italic text-sm leading-relaxed text-cream-100/70">
                 NatKhat Kanudo Yuvak Mandal,
                 Oppo. Sidhdharth Apartment,
                 Majuragate,

@@ -8,6 +8,7 @@ import Events from './Events';
 import Footer from './Footer';
 import BackToTop from './BackToTop';
 import NotificationManager from './NotificationManager';
+import SectionDivider from './SectionDivider';
 
 type SectionKey = 'home' | 'about' | 'gallery' | 'events';
 
@@ -31,7 +32,7 @@ const sectionSEO: Record<SectionKey, {
   },
   gallery: {
     title: "Gallery | Natkhat Kanudo Yuvak Mandal",
-    description: "Memories from our previous celebrations and events.",
+    description: "Ten years of devotion, community, and celebration — 2017 to 2026.",
     ogImage: "https://nkym.vercel.app/icon.png",
     ogUrl: "https://nkym.vercel.app/#gallery",
   },
@@ -74,6 +75,24 @@ const MainLayout = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (!hash || !sectionKeys.includes(hash as SectionKey)) return;
+
+    const scrollToHash = () => {
+      document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    // Sections below the target (Gallery/Events) fetch their data async and
+    // grow taller once photos/events load, so a single early scroll can
+    // undershoot. Re-issue the scroll once content has had time to settle.
+    const timers = [
+      setTimeout(scrollToHash, 100),
+      setTimeout(scrollToHash, 1000),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
   const seo = sectionSEO[activeSection];
 
   return (
@@ -102,7 +121,9 @@ const MainLayout = () => {
       <Header />
       <Hero />
       <About />
+      <SectionDivider bgClassName="bg-cream-50" waveClassName="fill-cream-100" />
       <Gallery />
+      <SectionDivider bgClassName="bg-cream-100" waveClassName="fill-white" />
       <Events />
       <Footer />
       <NotificationManager />

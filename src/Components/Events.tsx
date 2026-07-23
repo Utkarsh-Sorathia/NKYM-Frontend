@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaCalendarDay, FaLocationDot } from "react-icons/fa6";
 import { motion } from "framer-motion";
+import BackgroundPattern from "./BackgroundPattern";
+import HeadingAccent from "./HeadingAccent";
 
 type EventItem = {
   id: string;
@@ -50,20 +52,21 @@ const Events: React.FC = () => {
   };
 
   return (
-    <section id="events" className="py-12 bg-gray-50 scroll-mt-16 sm:scroll-mt-0">
-      <div className="container mx-auto px-4">
+    <section id="events" className="relative overflow-hidden py-12 bg-white scroll-mt-24">
+      <BackgroundPattern />
+      <div className="relative z-10 container mx-auto px-4">
         {/* Section header */}
         <div className="text-center mb-16">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-extrabold text-amber-600 mb-4 tracking-wide"
+            className="text-3xl md:text-4xl font-extrabold text-gold-600 mb-4 tracking-wide"
           >
             Upcoming Events
           </motion.h2>
-          <div className="w-24 h-1 bg-amber-500 mx-auto rounded-full"></div>
-          <p className="text-gray-600 mt-5 max-w-3xl mx-auto text-lg font-medium">
+          <HeadingAccent />
+          <p className="text-gray-600 mt-4 max-w-2xl mx-auto text-base md:text-lg">
             Mark your calendars for these special moments during Ganesh Utsav!
           </p>
         </div>
@@ -81,12 +84,12 @@ const Events: React.FC = () => {
               key={event.id}
               variants={itemVariants}
               whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-              className="bg-amber-50 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col"
+              className="bg-cream-100 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col"
             >
               {/* Title and date */}
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-semibold text-gray-800">{event.title}</h3>
-                <div className="flex items-center text-amber-600 font-semibold space-x-2 whitespace-nowrap">
+                <div className="flex items-center text-gold-600 font-semibold space-x-2 whitespace-nowrap">
                   <FaCalendarDay size={18} />
                   <span>{new Date(event.date).toLocaleDateString(undefined, {
                     year: "numeric",

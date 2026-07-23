@@ -10,6 +10,9 @@ const NotificationManager: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    let handleScroll: (() => void) | null = null;
+
     const init = async () => {
       const supported = fcmService.isNotificationSupported();
       setIsSupported(supported);
@@ -24,13 +27,31 @@ const NotificationManager: React.FC = () => {
       fcmService.setupForegroundMessageListener();
 
       if (supported && !isGranted && storedPermission !== 'denied') {
-        setTimeout(() => {
-          setShowModal(true);
-        }, 2500);
+        const armTimer = () => {
+          if (timer) return;
+          timer = setTimeout(() => {
+            setShowModal(true);
+          }, 4000);
+        };
+
+        handleScroll = () => {
+          if (window.scrollY > window.innerHeight * 0.6) {
+            armTimer();
+            if (handleScroll) window.removeEventListener('scroll', handleScroll);
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
       }
     };
 
     init();
+
+    return () => {
+      if (handleScroll) window.removeEventListener('scroll', handleScroll);
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
   const handleEnableNotifications = async () => {

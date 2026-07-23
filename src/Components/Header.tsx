@@ -63,7 +63,7 @@ const Header: React.FC = () => {
             }`}>
               Natkhat Kanudo Yuvak Mandal
             </h1>
-            <p className={`text-[10px] sm:text-xs transition-colors duration-300 ${
+            <p className={`text-xs transition-colors duration-300 ${
               scrolled ? "text-gray-600" : "text-gray-200"
             }`}>Est. 2012</p>
           </div>
@@ -102,8 +102,8 @@ const Header: React.FC = () => {
               <a
                 href="#gallery"
                 className={`nav-link font-semibold transition-colors duration-300 ${
-                  scrolled 
-                    ? "text-gray-700 hover:text-amber-600" 
+                  scrolled
+                    ? "text-gray-700 hover:text-amber-600"
                     : "text-white hover:text-amber-300"
                 }`}
                 onClick={(e) => handleSmoothScroll(e, "#gallery")}

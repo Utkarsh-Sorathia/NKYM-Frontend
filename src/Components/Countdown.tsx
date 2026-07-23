@@ -39,10 +39,10 @@ const Countdown: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto px-4">
-      <h3 className="text-sm md:text-xl font-semibold mb-2 md:mb-6 text-white text-center">
+      <h3 className="text-base md:text-xl font-semibold mb-3 md:mb-6 text-white text-center">
         Countdown to Ganesh Chaturthi 2026
       </h3>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 md:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
         {[
           { label: 'Days', value: timeLeft.days },
           { label: 'Hours', value: timeLeft.hours },
@@ -51,12 +51,12 @@ const Countdown: React.FC = () => {
         ].map((item, index) => (
           <div
             key={index}
-            className="countdown-box rounded-lg p-2 md:p-4 text-center border border-white border-opacity-20 backdrop-blur-sm shadow-sm"
+            className="countdown-box rounded-lg p-3 md:p-4 text-center border border-white border-opacity-20 backdrop-blur-sm shadow-sm"
           >
-            <div className="font-display text-lg md:text-3xl font-bold text-white select-none">
+            <div className="font-display text-xl md:text-3xl font-bold text-white select-none">
               {String(item.value).padStart(2, '0')}
             </div>
-            <div className="text-[10px] md:text-sm text-white mt-0.5 md:mt-1 select-none">{item.label}</div>
+            <div className="text-xs md:text-sm text-white mt-1 select-none">{item.label}</div>
           </div>
         ))}
       </div>

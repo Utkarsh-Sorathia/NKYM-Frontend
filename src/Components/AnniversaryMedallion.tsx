@@ -18,9 +18,9 @@ const AnniversaryMedallion: React.FC = () => {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, delay: 0.1, type: 'spring' }}
-      className="flex flex-col items-center mb-4 md:mb-6"
+      className="flex flex-col items-center mb-1 md:mb-6"
     >
-      <div className="relative w-20 h-20 md:w-32 md:h-32">
+      <div className="relative w-14 h-14 md:w-32 md:h-32">
         {/* Traditional dotted ring, drawn procedurally so no external asset is needed */}
         <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full">
           <defs>
@@ -45,16 +45,16 @@ const AnniversaryMedallion: React.FC = () => {
 
         {/* Medallion face */}
         <div className="absolute inset-[10%] rounded-full bg-linear-to-br from-gold-300 via-gold-500 to-gold-700 shadow-lg shadow-maroon-950/60 border-2 border-gold-200/60 flex flex-col items-center justify-center">
-          <span className="font-display text-2xl md:text-4xl font-extrabold text-maroon-950 leading-none">
+          <span className="font-display text-base md:text-4xl font-extrabold text-maroon-950 leading-none">
             10
           </span>
-          <span className="font-display text-[8px] md:text-[10px] font-bold text-maroon-900 tracking-[0.2em] uppercase mt-0.5">
+          <span className="font-display text-[6px] md:text-[10px] font-bold text-maroon-900 tracking-[0.2em] uppercase mt-0.5">
             Years
           </span>
         </div>
       </div>
 
-      <span className="mt-2 md:mt-3 font-display text-[10px] md:text-sm font-semibold tracking-[0.25em] uppercase text-gold-200 drop-shadow-md">
+      <span className="mt-1 md:mt-3 font-display text-[9px] md:text-sm font-semibold tracking-[0.25em] uppercase text-gold-200 drop-shadow-md">
         2017 – 2026
       </span>
     </motion.div>
